@@ -85,6 +85,7 @@ docker run -e keymap=my-keymap -e keyboard=handwired/dactyl --rm -v $('pwd'):/qm
 
 ---
 ## kinesis
+![kinesis](https://github.com/baronTommy/keymap/blob/master/doc/kinesis.jpg "kinesis")
 
 ## dactyl
 ![dactyl](https://github.com/baronTommy/keymap/blob/master/doc/dactyl.jpg "dactyl")

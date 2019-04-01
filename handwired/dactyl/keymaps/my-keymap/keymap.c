@@ -11,20 +11,25 @@
 #define FN 4
 #define MY_FN 5
 
+#define WINDOW_SWITCH 6
+
 // 親指モディファイ
 #define MY_KC_LL KC_LSHIFT
 #define MY_KC_LR KC_LGUI
 #define MY_KC_RL KC_LALT
 #define MY_KC_RR KC_RCTRL // KC_LCTRL だとバグ
 
-// レイヤー切り変え
 enum custom_keycodes {
   KC_MAKE = SAFE_RANGE,
   MY_KC_FN,
   MY_KC_SYM1,
   MY_KC_SYM2,
   MY_KC_NUM,
-  MY_KC_SPEC
+  MY_KC_SPEC,
+
+  MY_KC_WINDOW_SWITCH_SELECT,
+  MY_KC_WINDOW_SWITCH_CANCEL,
+
 };
 
 // OSに渡す用
@@ -52,9 +57,13 @@ enum custom_keycodes {
 #define MY_KC_21 KC_F18
 #define MY_KC_22 KC_F19
 
-// エイリアス
+// ime
 #define MY_KC_JP KC_LANG1
 #define MY_KC_EN KC_LANG2
+
+// window 切り変え
+#define MY_KC_WINDOW_SWITCH_R KC_TAB
+#define MY_KC_WINDOW_SWITCH_L LSFT(KC_TAB)
 
 // この秒数(ms)以内に、キーアップでワンショット発火
 #define ONE_SHOT_TIME 200
@@ -207,6 +216,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
+
+  [WINDOW_SWITCH] = LAYOUT_dactyl(
+    // Left Hand
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, MY_KC_WINDOW_SWITCH_L, XXXXXXXXXX, XXXXXXXXXX, MY_KC_WINDOW_SWITCH_R, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, __________, __________, __________, __________,
+
+                 XXXXXXXXXX, XXXXXXXXXX,
+                 XXXXXXXXXX,
+    MY_KC_WINDOW_SWITCH_SELECT, __________, XXXXXXXXXX,
+                          
+    // Right Hand
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, MY_KC_WINDOW_SWITCH_SELECT, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, __________, __________, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    
+    XXXXXXXXXX, XXXXXXXXXX,  
+    XXXXXXXXXX,
+    XXXXXXXXXX, MY_KC_WINDOW_SWITCH_CANCEL, __________
+  ),
 };
 
 static bool one_shot_modifiers_through_flg = false;
@@ -216,19 +249,21 @@ typedef struct OneShotModifier {
   uint16_t key;
   uint16_t send_key;
   uint16_t down_ms;
-  int layer;
+  int press_layer;
+  int release_layer;
   bool is_down;
 } one_shot_modifier;
+
 one_shot_modifier one_shot_modifiers[] = {
-  {MY_KC_LL, KC_ENTER, MY_KC_LL, BASE, false},
-  {MY_KC_LR, KC_BSPACE, MY_KC_LR, BASE, false},
-  {MY_KC_RL, KC_ESCAPE, MY_KC_RL, BASE, false},
-  {MY_KC_RR, KC_SPACE, MY_KC_RR, BASE, false},
-  {MY_KC_FN, MY_KC_0, MY_KC_FN, FN, false},
-  {MY_KC_SYM1, MY_KC_0, MY_KC_SYM1, SYMBOL1, false},
-  {MY_KC_SYM2, MY_KC_0, MY_KC_SYM2, SYMBOL2, false},
-  {MY_KC_NUM, MY_KC_0, MY_KC_NUM, NUMBER, false},
-  {MY_KC_SPEC, MY_KC_0, MY_KC_SPEC, MY_FN, false},
+  {MY_KC_LL, KC_ENTER, MY_KC_LL, BASE, BASE, false},
+  {MY_KC_LR, KC_BSPACE, MY_KC_LR, BASE, BASE, false},
+  {MY_KC_RL, KC_ESCAPE, MY_KC_RL, BASE, BASE, false},
+  {MY_KC_RR, KC_SPACE, MY_KC_RR, BASE, BASE, false},
+  {MY_KC_FN, MY_KC_0, MY_KC_FN, FN, BASE, false},
+  {MY_KC_SYM1, MY_KC_0, MY_KC_SYM1, SYMBOL1, BASE, false},
+  {MY_KC_SYM2, MY_KC_0, MY_KC_SYM2, SYMBOL2, BASE, false},
+  {MY_KC_NUM, MY_KC_0, MY_KC_NUM, NUMBER, BASE, false},
+  {MY_KC_SPEC, MY_KC_0, MY_KC_SPEC, MY_FN, WINDOW_SWITCH, false}
 };
 int one_shot_modifiers_cnt = (sizeof(one_shot_modifiers)/sizeof(one_shot_modifier));
 
@@ -266,6 +301,14 @@ simultaneously_one_shot_modifier simultaneously_one_shot_modifiers[] = {
 };
 int simultaneously_one_shot_modifiers_cnt = (sizeof(simultaneously_one_shot_modifiers)/sizeof(simultaneously_one_shot_modifier));
 
+bool is_modifiers_down(void) {
+  // モディファイキーを正常に取得出来無いため 妥協
+  if (one_shot_modifiers[0].is_down || one_shot_modifiers[1].is_down || one_shot_modifiers[2].is_down || one_shot_modifiers[3].is_down) {
+    return true;
+  }
+  return false;
+}
+
 void set_imput_mode(uint16_t keycode) {
   if (keycode == MY_KC_EN) {
     is_input_mode_en = true;
@@ -284,10 +327,10 @@ void key_send(uint16_t keycode) {
 }
 
 uint16_t get_diff_time_ms(uint16_t a, uint16_t b) {
-    if (a > b) {
-      return a - b;
-    }
-    return b - a;
+  if (a > b) {
+    return a - b;
+  }
+  return b - a;
 }
 
 int find_one_shot_modifier_no(uint16_t keycode) {
@@ -317,15 +360,15 @@ bool can_one_shot_modifier(uint16_t keycode) {
   return true;
 }
 
-void change_layer_if_need(int layer, bool on) {
-  if (layer == BASE) {
+void change_layer_if_need(int press_layer, bool on) {
+  if (press_layer == BASE) {
     return;
   }
   if (on) {
-    layer_on(layer);
+    layer_on(press_layer);
     return;
   }
-  layer_off(layer);
+  layer_off(press_layer);
 }
 
 void send_one_shot_modifier(uint16_t keycode) {
@@ -335,7 +378,7 @@ void send_one_shot_modifier(uint16_t keycode) {
 
 void set_modifier_key_down(uint16_t keycode) {
   int no = find_one_shot_modifier_no(keycode);
-  change_layer_if_need(one_shot_modifiers[no].layer, true);
+  change_layer_if_need(one_shot_modifiers[no].press_layer, true);
 
   one_shot_modifiers[no].down_ms = timer_read();
   one_shot_modifiers[no].is_down = true;
@@ -398,10 +441,25 @@ void send_simultaneously_one_shot_modifier(uint16_t keycode) {
   key_send(simultaneously_one_shot_modifiers[no].send_key);
 }
 
+bool can_window_switch(int layer) {
+  if (layer != WINDOW_SWITCH) {
+    return false;
+  }
+
+  return !is_modifiers_down();
+}
+
+void window_switch(int layer) {
+  register_code(KC_LALT);
+  register_code(KC_TAB);
+  unregister_code(KC_TAB); // alt 押したまま
+  // unregister_code(KC_LALT);
+  layer_on(layer);
+}
+
 void set_modifier_key_up(uint16_t keycode) {
-    unregister_code(keycode);
     int no = find_one_shot_modifier_no(keycode);
-    change_layer_if_need(one_shot_modifiers[no].layer, false);
+    change_layer_if_need(one_shot_modifiers[no].press_layer, false);
 
     if (can_simultaneously_one_shot_modifier(keycode)) {
       one_shot_modifiers[no].is_down = false;
@@ -410,6 +468,14 @@ void set_modifier_key_up(uint16_t keycode) {
     }
 
     if (can_one_shot_modifier(keycode)) {
+      // レイヤー変更
+      // --------------------------------------------------
+      int layer = one_shot_modifiers[no].release_layer;
+      if (can_window_switch(layer)) {
+        window_switch(layer);
+        return;
+      }
+      // --------------------------------------------------
       one_shot_modifiers[no].is_down = false;
       send_one_shot_modifier(keycode);
       return;
@@ -434,8 +500,44 @@ void pre_send_hankaku(void) {
     }
 }
 
+void window_switch_select(void) {
+  unregister_code(KC_RCTRL); // CTRL が押されたままになるの たぶんバグ
+  unregister_code(KC_LCTRL); // CTRL が押されたままになるの たぶんバグ
+  unregister_code(KC_LALT);
+  layer_off(WINDOW_SWITCH);
+  unregister_code(KC_RCTRL); // CTRL が押されたままになるの たぶんバグ
+  unregister_code(KC_LCTRL); // CTRL が押されたままになるの たぶんバグ
+}
+
+void window_switch_cancel(void) {
+  unregister_code(KC_RCTRL); // CTRL が押されたままになるの たぶんバグ
+  unregister_code(KC_LCTRL); // CTRL が押されたままになるの たぶんバグ
+  register_code(KC_ESCAPE);
+  unregister_code(KC_ESCAPE);
+  unregister_code(KC_LALT);
+  layer_off(WINDOW_SWITCH);
+  unregister_code(KC_RCTRL); // CTRL が押されたままになるの たぶんバグ
+  unregister_code(KC_LCTRL); // CTRL が押されたままになるの たぶんバグ
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {  
   switch (keycode) {
+    // window 切り変え
+    case MY_KC_WINDOW_SWITCH_SELECT:
+      if (record->event.pressed) {
+        window_switch_select();
+        return true;
+      }
+      return true;
+
+    // window 切り変え
+    case MY_KC_WINDOW_SWITCH_CANCEL:
+      if (record->event.pressed) {
+        window_switch_cancel();
+        return true;
+      }
+      return true;
+
     // 親指モディファイ
     case MY_KC_LL:
     case MY_KC_LR:
@@ -450,7 +552,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_modifier_key_up(keycode);
       return true;
     
-    // レイヤー切り変え
+    // レイヤー切り変え or oneshot
     case MY_KC_FN:
     case MY_KC_SYM1:
     case MY_KC_SYM2:
@@ -462,7 +564,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       set_modifier_key_up(keycode);
       return true;
-    
+
     // 記号, 数値 ime off
     case KC_0:
     case KC_1:

@@ -74,7 +74,7 @@ docker run -e keymap=my-keymap -e keyboard=kinesis --rm -v $('pwd'):/qmk:rw edas
 https://github.com/qmk/qmk_firmware/tree/master/keyboards/handwired/dactyl
 ```
 cp -r ../keymap/handwired/dactyl/keymaps/my-keymap keyboards/handwired/dactyl/keymaps
-docker run -e keymap=my-keymap -e keyboard=handwired/dactyl --rm -v $('pwd'):/qmk:rw edasque/qmk_firmware
+util/docker_build.sh handwired/dactyl:my-keymap
 ```
 
 ---

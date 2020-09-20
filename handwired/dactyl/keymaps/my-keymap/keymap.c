@@ -67,27 +67,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_dactyl(
     // Left Hand
     XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
-    KC_TAB,      KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,
+    XXXXXXXXXX,  KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,
     KC_SPACE,    KC_A,        KC_S,        KC_D,        KC_F,        KC_G,
-    KC_ESCAPE,   KC_Z,        KC_X,        KC_C,        KC_V,        KC_B, 
+    KC_ESCAPE,   KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,
     XXXXXXXXXX,  MY_KC_FN,    MY_KC_SYM2,  MY_KC_SYM1,  MY_KC_NUM,
 
                  RESET,       XXXXXXXXXX,
-                 XXXXXXXXXX,
-    MY_KC_LL,   MY_KC_LR,     XXXXXXXXXX,
-                          
+                 KC_LALT,
+    MY_KC_LL,   MY_KC_LR,     KC_LCTRL,
+
     // Right Hand
     XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
-    KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_DEL,
+    KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        XXXXXXXXXX,
     KC_H,        KC_J,        KC_K,        KC_L,        MY_KC_SPEC,  KC_BSPACE,
     KC_N,        KC_M,        KC_UP,       KC_TAB,      KC_DEL,      KC_ENTER,
     KC_LEFT,     KC_DOWN,     KC_RIGHT,    XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, MY_KC_RL,    MY_KC_RR
     ),
-  
+
   [NUMBER] = LAYOUT_dactyl(
     // Left Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
@@ -99,19 +99,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXXXXX, XXXXXXXXXX,
                  XXXXXXXXXX,
     __________, __________, XXXXXXXXXX,
-                          
+
     // Right Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, KC_7,       KC_8,       KC_9,       XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, KC_4,       KC_5,       KC_6,       XXXXXXXXXX, XXXXXXXXXX,
     KC_0,       KC_1,       KC_2,       KC_3,       XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
-  
+
   [SYMBOL1] = LAYOUT_dactyl(
     // Left Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
@@ -123,15 +123,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXXXXX, XXXXXXXXXX,
                  XXXXXXXXXX,
     __________, __________, XXXXXXXXXX,
-                          
+
     // Right Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     KC_UNDS,    KC_PIPE,    KC_AMPR,    KC_EXLM,    KC_QUESTION, XXXXXXXXXX,
     KC_HASH,    KC_COMMA,   KC_DOT,     KC_SCOLON,  KC_COLON,   KC_AT,
     KC_DQUO,    KC_QUOTE,   KC_GRAVE,   KC_SLASH,   KC_BSLASH,  XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
@@ -147,15 +147,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXXXXX, XXXXXXXXXX,
                  XXXXXXXXXX,
     __________, __________, XXXXXXXXXX,
-                          
+
     // Right Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     KC_CIRC,    KC_LABK,    KC_RABK,    KC_LBRACKET, KC_RBRACKET, XXXXXXXXXX,
     KC_EQUAL,   KC_PLUS,    KC_MINUS,   KC_ASTR,    KC_PERC,    KC_DLR,
     KC_TILD,    KC_LPRN,    KC_RPRN,    KC_LCBR,    KC_RCBR,    XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
@@ -171,19 +171,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXXXXX, XXXXXXXXXX,
                  XXXXXXXXXX,
     __________, __________, XXXXXXXXXX,
-                          
+
     // Right Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, KC_F1,      KC_F2,      KC_F3,      KC_F4,      XXXXXXXXXX,
     XXXXXXXXXX, KC_F5,      KC_F6,      KC_F7,      KC_F8,      XXXXXXXXXX,
     XXXXXXXXXX, KC_F9,      KC_F10,     KC_F11,     KC_F12,     XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
-  
+
   [MY_FN] = LAYOUT_dactyl(
     // Left Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
@@ -195,15 +195,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXXXXX, XXXXXXXXXX,
                  XXXXXXXXXX,
     __________, __________, XXXXXXXXXX,
-                          
+
     // Right Hand
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, __________, XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, __________, __________, XXXXXXXXXX,
     XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
-    
-    XXXXXXXXXX, XXXXXXXXXX,  
+
+    XXXXXXXXXX, XXXXXXXXXX,
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
@@ -266,7 +266,7 @@ simultaneously_one_shot_modifier simultaneously_one_shot_modifiers[] = {
 };
 int simultaneously_one_shot_modifiers_cnt = (sizeof(simultaneously_one_shot_modifiers)/sizeof(simultaneously_one_shot_modifier));
 
-void set_imput_mode(uint16_t keycode) {
+void set_input_mode(uint16_t keycode) {
   if (keycode == MY_KC_EN) {
     is_input_mode_en = true;
   }
@@ -277,7 +277,7 @@ void set_imput_mode(uint16_t keycode) {
 }
 
 void key_send(uint16_t keycode) {
-  set_imput_mode(keycode);
+  set_input_mode(keycode);
   one_shot_modifiers_through_flg = true;
   register_code(keycode);
   unregister_code(keycode);
@@ -317,7 +317,7 @@ bool can_one_shot_modifier(uint16_t keycode) {
   return true;
 }
 
-void change_layer_if_need(int layer, bool on) {
+void layer_change(int layer, bool on) {
   if (layer == BASE) {
     return;
   }
@@ -329,13 +329,13 @@ void change_layer_if_need(int layer, bool on) {
 }
 
 void send_one_shot_modifier(uint16_t keycode) {
-  int no = find_one_shot_modifier_no(keycode);  
+  int no = find_one_shot_modifier_no(keycode);
   key_send(one_shot_modifiers[no].send_key);
 }
 
 void set_modifier_key_down(uint16_t keycode) {
   int no = find_one_shot_modifier_no(keycode);
-  change_layer_if_need(one_shot_modifiers[no].layer, true);
+  layer_change(one_shot_modifiers[no].layer, true);
 
   one_shot_modifiers[no].down_ms = timer_read();
   one_shot_modifiers[no].is_down = true;
@@ -347,7 +347,7 @@ int find_simultaneously_one_shot_modifier_pear_no(uint16_t keycode) {
     if (simultaneously_one_shot_modifiers[i].key1 != keycode) {
       continue;
     }
-    
+
     int pear_no = find_one_shot_modifier_no(simultaneously_one_shot_modifiers[i].key2);
     if (pear_no > -1 && !one_shot_modifiers[pear_no].is_down) {
       continue;
@@ -357,7 +357,7 @@ int find_simultaneously_one_shot_modifier_pear_no(uint16_t keycode) {
   return -1;
 }
 
-int find_simulataneously_one_shot_modifier_no(uint16_t key1, uint16_t key2) {
+int find_simultaneously_one_shot_modifier_no(uint16_t key1, uint16_t key2) {
   for (int i = 0; i <= simultaneously_one_shot_modifiers_cnt; i++) {
     if (simultaneously_one_shot_modifiers[i].key1 == key1 && simultaneously_one_shot_modifiers[i].key2 == key2) {
       return i;
@@ -379,7 +379,7 @@ bool can_simultaneously_one_shot_modifier(uint16_t keycode) {
   if (pear_no == -1) {
     return false;
   }
-  
+
   int current_no = find_one_shot_modifier_no(keycode);
   uint16_t current_down_time = timer_elapsed(one_shot_modifiers[current_no].down_ms);
   if (current_down_time > ONE_SHOT_TIME) {
@@ -393,7 +393,7 @@ bool can_simultaneously_one_shot_modifier(uint16_t keycode) {
 void send_simultaneously_one_shot_modifier(uint16_t keycode) {
   int current_no = find_one_shot_modifier_no(keycode);
   int pear_no = find_simultaneously_one_shot_modifier_pear_no(keycode);
-  int no = find_simulataneously_one_shot_modifier_no(one_shot_modifiers[current_no].key, one_shot_modifiers[pear_no].key);
+  int no = find_simultaneously_one_shot_modifier_no(one_shot_modifiers[current_no].key, one_shot_modifiers[pear_no].key);
   unregister_code(one_shot_modifiers[pear_no].key);
   key_send(simultaneously_one_shot_modifiers[no].send_key);
 }
@@ -401,7 +401,7 @@ void send_simultaneously_one_shot_modifier(uint16_t keycode) {
 void set_modifier_key_up(uint16_t keycode) {
     unregister_code(keycode);
     int no = find_one_shot_modifier_no(keycode);
-    change_layer_if_need(one_shot_modifiers[no].layer, false);
+    layer_change(one_shot_modifiers[no].layer, false);
 
     if (can_simultaneously_one_shot_modifier(keycode)) {
       one_shot_modifiers[no].is_down = false;
@@ -434,7 +434,22 @@ void pre_send_hankaku(void) {
     }
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {  
+void pre_send_hankaku2(void) {
+    for (int i = 0; i <= one_shot_modifiers_cnt; i++) {
+      if (one_shot_modifiers[i].is_down) {
+        unregister_code(one_shot_modifiers[i].key);
+      }
+    }
+
+    key_send(KC_U);
+
+    for (int i = 0; i <= one_shot_modifiers_cnt; i++) {
+      if (one_shot_modifiers[i].is_down) {
+        register_code(one_shot_modifiers[i].key);
+      }
+    }
+}
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // 親指モディファイ
     case MY_KC_LL:
@@ -449,7 +464,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(keycode);
       set_modifier_key_up(keycode);
       return true;
-    
+
     // レイヤー切り変え
     case MY_KC_FN:
     case MY_KC_SYM1:
@@ -462,7 +477,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       set_modifier_key_up(keycode);
       return true;
-    
+
     // 記号, 数値 ime off
     case KC_0:
     case KC_1:
@@ -505,7 +520,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_LPRN:
     case KC_RPRN:
     case KC_LCBR:
-    case KC_RCBR:    
+    case KC_RCBR:
       if (!record->event.pressed) {
         return true;
       }
@@ -514,7 +529,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (is_input_mode_en) {
         return true;
       }
-      pre_send_hankaku();
+      // !! Dactylでここを有効にすると、日本語入力後にTabやDeleteが送信される
+      // pre_send_hankaku();
       return true;
 
     // shift ダウン時に ime off

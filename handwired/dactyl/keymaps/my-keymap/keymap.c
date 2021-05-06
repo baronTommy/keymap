@@ -434,21 +434,6 @@ void pre_send_hankaku(void) {
     }
 }
 
-void pre_send_hankaku2(void) {
-    for (int i = 0; i <= one_shot_modifiers_cnt; i++) {
-      if (one_shot_modifiers[i].is_down) {
-        unregister_code(one_shot_modifiers[i].key);
-      }
-    }
-
-    key_send(KC_U);
-
-    for (int i = 0; i <= one_shot_modifiers_cnt; i++) {
-      if (one_shot_modifiers[i].is_down) {
-        register_code(one_shot_modifiers[i].key);
-      }
-    }
-}
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // 親指モディファイ
@@ -529,7 +514,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (is_input_mode_en) {
         return true;
       }
-      // !! Dactylでここを有効にすると、日本語入力後にTabやDeleteが送信される
+
+      is_input_mode_en = true;
+
+      register_code(KC_LSHIFT);
+      register_code(KC_LCTRL);
+      register_code(KC_SCOLON);
+      unregister_code(KC_SCOLON);
+      unregister_code(KC_LCTRL);
+      unregister_code(KC_LSHIFT);
+
+      // pre_send_hankaku を使用するとバグがある為ハードコーディング
       // pre_send_hankaku();
       return true;
 
@@ -572,7 +567,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (!is_key_down(MY_KC_LL)) {
         return true;
       }
-      // shift + ctrl などもime off になるが、妥協の範囲
+
+      is_input_mode_en = true;
       pre_send_hankaku();
       return true;
   }

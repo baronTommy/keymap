@@ -81,11 +81,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        XXXXXXXXXX,
     KC_H,        KC_J,        KC_K,        KC_L,        MY_KC_SPEC,  KC_BSPACE,
     KC_N,        KC_M,        KC_UP,       KC_TAB,      KC_DEL,      KC_ENTER,
-    KC_LEFT,     KC_DOWN,     KC_RIGHT,    XXXXXXXXXX, XXXXXXXXXX,
+    KC_LEFT,     KC_DOWN,     KC_RIGHT,    XXXXXXXXXX,  XXXXXXXXXX,
 
     XXXXXXXXXX, XXXXXXXXXX,
-    XXXXXXXXXX,
-    XXXXXXXXXX, MY_KC_RL,    MY_KC_RR
+    KC_MS_BTN2,
+    KC_MS_BTN1, MY_KC_RL,    MY_KC_RR
     ),
 
   [NUMBER] = LAYOUT_dactyl(

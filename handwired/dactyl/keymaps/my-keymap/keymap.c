@@ -10,6 +10,7 @@
 #define SYMBOL2 3
 #define FN 4
 #define MY_FN 5
+#define MOUSE 6
 
 // 親指モディファイ
 #define MY_KC_LL KC_LSHIFT
@@ -62,6 +63,7 @@ enum custom_keycodes {
 // この秒数(ms)以内に、キー同時押しWワンショット発動の条件
 #define W_ONE_SHOT_DOWN_TIME 100
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_dactyl(
@@ -72,9 +74,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,   KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,
     XXXXXXXXXX,  MY_KC_FN,    MY_KC_SYM2,  MY_KC_SYM1,  MY_KC_NUM,
 
-                 RESET,       XXXXXXXXXX,
-                 KC_LALT,
-    MY_KC_LL,   MY_KC_LR,     KC_LCTRL,
+                 RESET,      KC_LALT,
+                 KC_LCTRL,
+    MY_KC_LL,    MY_KC_LR,   MO(MOUSE),
 
     // Right Hand
     XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
@@ -84,8 +86,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LEFT,     KC_DOWN,     KC_RIGHT,    XXXXXXXXXX,  XXXXXXXXXX,
 
     XXXXXXXXXX, XXXXXXXXXX,
-    KC_MS_BTN2,
-    KC_MS_BTN1, MY_KC_RL,    MY_KC_RR
+    XXXXXXXXXX,
+    XXXXXXXXXX, MY_KC_RL,    MY_KC_RR
     ),
 
   [NUMBER] = LAYOUT_dactyl(
@@ -207,6 +209,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXXXXX,
     XXXXXXXXXX, __________, __________
   ),
+  
+  [MOUSE] = LAYOUT_dactyl(
+    // Left Hand
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, KC_MS_BTN3, KC_MS_BTN2, KC_MS_BTN1, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, __________, __________, __________, __________,
+
+                 XXXXXXXXXX, XXXXXXXXXX,
+                 XXXXXXXXXX,
+    __________, __________, XXXXXXXXXX,
+
+    // Right Hand
+    XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, KC_MS_UP,   XXXXXXXXXX, XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, __________, XXXXXXXXXX,
+    XXXXXXXXXX, XXXXXXXXXX, KC_MS_WH_UP, __________, __________, XXXXXXXXXX,
+    KC_MS_WH_LEFT, KC_MS_WH_DOWN, KC_MS_WH_RIGHT, XXXXXXXXXX, XXXXXXXXXX,
+
+    XXXXXXXXXX, XXXXXXXXXX,
+    XXXXXXXXXX,
+    XXXXXXXXXX, __________, __________
+  )
 };
 
 static bool one_shot_modifiers_through_flg = false;

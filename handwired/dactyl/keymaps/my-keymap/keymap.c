@@ -57,11 +57,6 @@ enum custom_keycodes {
 #define MY_KC_JP KC_LANG1
 #define MY_KC_EN KC_LANG2
 
-// BT用
-#define MY_AD_WO_L KC_INSERT // 接続
-#define MY_ADV_ID0 KC_NUMLOCK
-#define MY_ADV_ID1 KC_CAPSLOCK
-
 // この秒数(ms)以内に、キーアップでワンショット発火
 #define ONE_SHOT_TIME 200
 
@@ -84,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MY_KC_LL,    MY_KC_LR,   MO(MOUSE),
 
     // Right Hand
-    MY_AD_WO_L,  MY_ADV_ID0,  MY_ADV_ID1,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
+    XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
     KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        XXXXXXXXXX,
     KC_H,        KC_J,        KC_K,        KC_L,        MY_KC_SPEC,  KC_BSPACE,
     KC_N,        KC_M,        KC_UP,       KC_TAB,      KC_DEL,      KC_ENTER,
@@ -616,7 +611,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
         }
 
         is_input_mode_en = true;
-        pre_send_hankaku();
+
+        register_code(KC_LSHIFT);
+        register_code(KC_LCTRL);
+        register_code(KC_SCOLON);
+        unregister_code(KC_SCOLON);
+        unregister_code(KC_LCTRL);
+        unregister_code(KC_LSHIFT);
+
+        // pre_send_hankaku を使用するとバグがある為ハードコーディング
+        // pre_send_hankaku();
         return true;
     }
 

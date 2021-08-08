@@ -57,6 +57,9 @@ enum custom_keycodes {
 #define MY_KC_JP KC_LANG1
 #define MY_KC_EN KC_LANG2
 
+// BTペアリング
+#define MY_AD_WO_L KC_INSERT
+
 // この秒数(ms)以内に、キーアップでワンショット発火
 #define ONE_SHOT_TIME 200
 
@@ -79,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MY_KC_LL,    MY_KC_LR,   MO(MOUSE),
 
     // Right Hand
-    XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
+    MY_AD_WO_L,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,  XXXXXXXXXX,
     KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        XXXXXXXXXX,
     KC_H,        KC_J,        KC_K,        KC_L,        MY_KC_SPEC,  KC_BSPACE,
     KC_N,        KC_M,        KC_UP,       KC_TAB,      KC_DEL,      KC_ENTER,

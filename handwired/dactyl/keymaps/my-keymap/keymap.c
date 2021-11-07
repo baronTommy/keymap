@@ -615,15 +615,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
 
         is_input_mode_en = true;
 
-        register_code(KC_LSHIFT);
-        register_code(KC_LCTRL);
-        register_code(KC_SCOLON);
-        unregister_code(KC_SCOLON);
-        unregister_code(KC_LCTRL);
-        unregister_code(KC_LSHIFT);
-
-        // pre_send_hankaku を使用するとバグがある為ハードコーディング
-        // pre_send_hankaku();
+        pre_send_hankaku();
         return true;
     }
 
